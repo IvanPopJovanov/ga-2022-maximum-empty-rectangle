@@ -206,11 +206,16 @@ void MaximumEmptyRectangle::pokreniAlgoritam()
 
     T = constructSDH(_tacke, 0, _tacke.size()-1); // 3
 
+    currently_checking = true;
+
     for(int i = 0; i < (int)_tacke.size(); ++i) { // 4
         int Tl = Al, Tr = Ar, Y = At; // 5
         QPoint P = deleteSDH(); // 6
         while(Y != Ab) { // 7
             QPoint Pp = findSDH(Tl, Tr); // 7.1
+            checking_point = Pp;
+            AlgoritamBaza_updateCanvasAndBlock();
+
             Y = Pp.y();
 
             Cr = Tr;
@@ -233,6 +238,8 @@ void MaximumEmptyRectangle::pokreniAlgoritam()
             }
         }
     }
+
+    currently_checking = false;
 
     // Construct LX, NEXT, BEFOREJ Y and PYX. // 8
     auto _tacke_y_sorted = _tacke;
@@ -344,6 +351,14 @@ void MaximumEmptyRectangle::crtajAlgoritam(QPainter *painter) const
     {
         painter->drawPoint(pt);
     }
+
+    p.setWidth(20);
+    p.setColor(Qt::blue);
+    painter->setPen(p);
+
+    if(currently_checking) {
+        painter->drawPoint(checking_point);
+    }
 }
 
 void MaximumEmptyRectangle::pokreniNaivniAlgoritam()
@@ -403,9 +418,13 @@ void MaximumEmptyRectangle::pokreniNaivniAlgoritam()
         }
     }
 
+    currently_checking = true;
+
     for(int i = 0; i < (int)_tacke.size(); ++i) { // 4
         int Tl = Al, Tr = Ar; // 5
         for(int j = i+1; j < (int)_tacke.size(); ++j) { // 6
+            checking_point = _tacke[j];
+            AlgoritamBaza_updateCanvasAndBlock()
             if(Tl < _tacke[j].x() && _tacke[j].x() < Tr) { // 7
                 Cr = Tr;
                 Cl = Tl;
@@ -440,6 +459,8 @@ void MaximumEmptyRectangle::pokreniNaivniAlgoritam()
         }
 
     }
+
+    currently_checking = false;
 
     AlgoritamBaza_updateCanvasAndBlock();
 }
@@ -484,5 +505,13 @@ void MaximumEmptyRectangle::crtajNaivniAlgoritam(QPainter *painter) const
     for(const QPoint &pt : _tacke)
     {
         painter->drawPoint(pt);
+    }
+
+    p.setWidth(20);
+    p.setColor(Qt::blue);
+    painter->setPen(p);
+
+    if(currently_checking) {
+        painter->drawPoint(checking_point);
     }
 }

@@ -18,7 +18,7 @@
 #define CANVAS_HEIGHT            (MAX_DIM)
 
 #define BROJ_SLUCAJNIH_OBJEKATA  (20)
-#define DUZINA_PAUZE             (1)
+#define DUZINA_PAUZE             (100)
 
 /* Ne prevelika tolerancija na numericku gresku */
 #define EPS                      (1e-6)

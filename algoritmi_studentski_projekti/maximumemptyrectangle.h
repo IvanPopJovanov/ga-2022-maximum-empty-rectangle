@@ -26,6 +26,9 @@ private:
     int Ml = 0, Mr = 0, Mb = 0, Mt = 0;
     int Cl = 0, Cr = 0, Cb = 0, Ct = 0;
 
+    QPoint checking_point;
+    bool currently_checking = false;
+
     struct sdh;
     QPoint findSDH(int Tl, int Tr);
     void deactivateSDH(sdh *v, QPoint P);
